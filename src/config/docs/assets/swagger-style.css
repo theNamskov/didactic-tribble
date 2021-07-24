@@ -1,0 +1,8 @@
+.topbar img {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  content: url('brand-logo.png');
+  width: 20vh;
+  height: 15vh;
+}
