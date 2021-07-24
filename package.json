@@ -8,7 +8,7 @@
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s --copy-files",
     "dev": "nodemon --exec babel-node src/server.js",
-    "start": "node build/server",
+    "start": "node ./build/server",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "prettier": "prettier \"**/*.+(js|json)\"",
     "format": "npm run prettier -- --write",
