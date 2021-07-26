@@ -1,0 +1,75 @@
+/api/v1/employee-role/:
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description:
+          An ID of the specific employee to get role assigned. This is used to
+          retrieve data for a specific employee.
+    description: Fetches all employees and their roles.
+    responses:
+      '200':
+        description: Successful fetch of all employees and their roles.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRoleObject'
+      '404':
+        description: The employee ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  patch:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description:
+          An ID of the specific employee to update employee-role relationship.
+    description: Updates the details of an employee-role relationship.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              roleId:
+                type: string
+                description:
+                  The unique ID of a role. The role must be already existent in
+                  the system.
+    responses:
+      '200':
+        description: Employee-Role relationship details successfully updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRoleObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.

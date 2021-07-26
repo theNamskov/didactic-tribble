@@ -1,0 +1,97 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    UserCreateObject:
+      type: object
+      description:
+        This represents the object structure expected when making a request to
+        create an Employee instance.
+      properties:
+        firstName:
+          type: string
+          description: The employee's first name.
+          required: true
+          example: Enoch
+        lastName:
+          type: string
+          description: The employee's surname.
+          required: true
+          example: Antwi
+        role:
+          type: string
+          description:
+            An unique ID representing the role of the employee. Role must exist
+            in the system.
+          required: true
+          example: 60fe4ae9edecaf26d38e0817
+        email:
+          type: string
+          description: The employee's email.
+          required: true
+          example: test@test.com
+        projects:
+          type: Array
+          description:
+            An array containing a list of projects the employee should be
+            assigned to. Field is optional and can be left blank.
+        country:
+          type: string
+          description: The employee's country of residence.
+          example: Ghana
+        password:
+          type: string
+          description: The employee's password required for accessing account.
+          required: true
+          example: .Th!s1s4P4s5wrD789.
+    UserObject:
+      type: object
+      description: A representation of the Employee model.
+      properties:
+        _id:
+          type: string
+          description: A unique ID generated to represent the employee.
+        firstName:
+          type: string
+          description: The employee's first name.
+          example: Enoch
+        lastName:
+          type: string
+          description: The employee's surname.
+          example: Antwi
+        role:
+          type: string
+          description:
+            An unique ID representing the role of the employee. Role must exist
+            in the system.
+          example: 60fe4ae9edecaf26d38e0817
+        email:
+          type: string
+          description: The employee's email.
+          required: true
+          example: test@test.com
+        projects:
+          type: Array
+          description:
+            An array containing a list of projects the employee should be
+            assigned to. Field is optional and can be left blank.
+        country:
+          type: string
+          description: The employee's country of residence.
+          example: Ghana
+        password:
+          type: string
+          description: The employee's password required for accessing account.
+          required: true
+          example: .Th!s1s4P4s5wrD789.
+        createdAt:
+          type: string
+          description: The record of time at which the Employee was created.
+          required: false
+        updatedAt:
+          type: string
+          description: The record of time at which the Employee was updated.
+          required: false

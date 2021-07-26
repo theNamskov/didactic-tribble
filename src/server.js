@@ -24,6 +24,8 @@ import rolesRouter from './routes/role'
 import employeesAndProjectsRouter from './routes/employeeProject'
 import employeesAndRolesRouter from './routes/employeeRole'
 
+import passport from './config/auth'
+
 const app = express()
 
 app.use(express.urlencoded({extended: true}))
@@ -37,7 +39,7 @@ app.use(helmet()) //Adds extra headers to protect the routes
 app.use(xss()) //To prevent a harmful script being sent with the POST request
 app.use(hpp()) //To prevent HTTP Parameter Pollution.
 app.use(express.static(path.join(__dirname, 'config/docs/assets')))
-
+app.use(passport.initialize())
 const router = express.Router()
 
 router.use('/employees', employeesRouter)
@@ -68,6 +70,11 @@ app.use((req, res) => {
 
 const port = process.env.PORT
 app.listen(port, async () => {
-  await database()
-  console.log(`Service listening at ${process.env.APP_BASE_URL}:${port}`)
+  try {
+    await database()
+    console.log(`Service listening at ${process.env.APP_BASE_URL}:${port}`)
+  } catch (e) {
+    console.log('DB CONNECTION ERROR:', e.message)
+    console.log(`Service listening at ${process.env.APP_BASE_URL}:${port}`)
+  }
 })

@@ -1,0 +1,96 @@
+/api/v1/employee-project/:
+  post:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Project
+    description: Creates a new employee-project relationship.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmployeeProjectCreateObject'
+    responses:
+      '200':
+        description: A new employee-project relationship has been created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeProjectObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Project
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description:
+          An ID of the specific employee to get all projects assigned.
+        required: true
+    description: Fetches all projects assigned to a particular employee.
+    responses:
+      '200':
+        description: Successful fetch of all projects assigned to an employee.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeProjectObject'
+      '404':
+        description: The employee ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  delete:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Project
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee-project relationship.
+    description: Deletes a specified employee-project relationship.
+    responses:
+      '200':
+        description: Successful deletion of an employee-project relationship.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example:
+                    Employee-Project relationship with ID 12033333 successfully
+                    deleted.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
