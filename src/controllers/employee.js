@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import bcrypt from 'bcryptjs'
 
 import apiResponses from '../utils/responses'
@@ -5,6 +6,8 @@ import apiResponses from '../utils/responses'
 import Employee from '../models/employee'
 import EmployeeRole from '../models/employeeRole'
 import EmployeeProject from '../models/employeeProject'
+
+import {signToken} from '../utils/helpers'
 
 export const create = async (req, res) => {
   try {
@@ -41,6 +44,30 @@ export const create = async (req, res) => {
       role,
       projects,
     })
+  } catch (e) {
+    return apiResponses.serverErrorResponseWithData(res, e)
+  }
+}
+
+export const login = async (req, res) => {
+  try {
+    const {email, password} = req.body
+    const user = await Employee.findOne({email})
+    if (!user)
+      return apiResponses.notFoundResponse(
+        res,
+        'Invalid email or password. Check email or password.',
+      )
+    const valid = await bcrypt.compare(password, user.password)
+    if (!valid)
+      return apiResponses.errorResponseWithMsg(
+        res,
+        'Invalid user credentials. Check email or password.',
+      )
+    return apiResponses.successResponseWithData(
+      res,
+      signToken({id: user.id}, process.env.AUTH_SECRET_DEF, {expiresIn: '5d'}),
+    )
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
   }
@@ -107,6 +134,7 @@ export const deleteOne = async (req = {}, res = {}) => {
 }
 
 export default {
+  login,
   create,
   getOne,
   getAll,
