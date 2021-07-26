@@ -64,10 +64,12 @@ export const login = async (req, res) => {
         res,
         'Invalid user credentials. Check email or password.',
       )
-    return apiResponses.successResponseWithData(
-      res,
-      signToken({id: user.id}, process.env.AUTH_SECRET_DEF, {expiresIn: '5d'}),
-    )
+    return apiResponses.successResponseWithData(res, {
+      token: signToken({id: user.id}, process.env.AUTH_SECRET_DEF, {
+        expiresIn: '5d',
+      }),
+      employee: user,
+    })
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
   }
