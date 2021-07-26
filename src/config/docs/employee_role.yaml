@@ -1,5 +1,7 @@
 /api/v1/employee-role/:
   get:
+    security:
+      - bearerAuth: []
     tags:
       - Employee And Role
     parameters:
@@ -36,6 +38,8 @@
           Unexpected error. Likelihood of a server error. Contact support
           services for assistance.
   patch:
+    security:
+      - bearerAuth: []
     tags:
       - Employee And Role
     parameters:

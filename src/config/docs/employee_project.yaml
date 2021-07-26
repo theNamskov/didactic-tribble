@@ -1,5 +1,7 @@
 /api/v1/employee-project/:
   post:
+    security:
+      - bearerAuth: []
     tags:
       - Employee And Project
     description: Creates a new employee-project relationship.
@@ -21,6 +23,8 @@
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
   get:
+    security:
+      - bearerAuth: []
     tags:
       - Employee And Project
     parameters:
@@ -57,6 +61,8 @@
           Unexpected error. Likelihood of a server error. Contact support
           services for assistance.
   delete:
+    security:
+      - bearerAuth: []
     tags:
       - Employee And Project
     parameters:

@@ -68,6 +68,8 @@
           parameters.
 /api/v1/employees/:
   post:
+    security:
+      - bearerAuth: []
     tags:
       - Employee
     description: Creates a new employee.
@@ -117,6 +119,8 @@
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
   get:
+    security:
+      - bearerAuth: []
     tags:
       - Employee
     parameters:
@@ -138,6 +142,8 @@
           Unexpected error. Likelihood of a server error. Contact support
           services for assistance.
   patch:
+    security:
+      - bearerAuth: []
     tags:
       - Employee
     parameters:
@@ -163,6 +169,8 @@
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
   delete:
+    security:
+      - bearerAuth: []
     tags:
       - Employee
     parameters:

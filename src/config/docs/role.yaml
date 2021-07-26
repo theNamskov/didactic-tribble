@@ -1,5 +1,7 @@
 /api/v1/roles/:
   post:
+    security:
+      - bearerAuth: []
     tags:
       - Role
     description: Creates a new role.
@@ -35,6 +37,8 @@
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
   get:
+    security:
+      - bearerAuth: []
     tags:
       - Role
     parameters:
@@ -69,6 +73,8 @@
           Unexpected error. Likelihood of a server error. Contact support
           services for assistance.
   patch:
+    security:
+      - bearerAuth: []
     tags:
       - Role
     parameters:
@@ -94,6 +100,8 @@
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
   delete:
+    security:
+      - bearerAuth: []
     tags:
       - Role
     parameters:
