@@ -1,0 +1,30 @@
+components:
+  schemas:
+    EmployeeRoleObject:
+      type: object
+      description: A representation of the EmployeeRole model.
+      properties:
+        _id:
+          type: string
+          description:
+            A unique ID generated to represent the employee-role relationship.
+        employeeId:
+          type: string
+          description: The unique ID of the employee.
+          required: true
+        roleId:
+          type: string
+          description: A payload of the role assigned to the employee.
+          required: true
+        createdAt:
+          type: string
+          description:
+            The record of time at which the EmployeeRole relationship was
+            created.
+          required: false
+        updatedAt:
+          type: string
+          description:
+            The record of time at which the EmployeeRole relationship was
+            updated.
+          required: false

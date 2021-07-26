@@ -1,0 +1,48 @@
+components:
+  schemas:
+    EmployeeProjectCreateObject:
+      type: object
+      description:
+        This represents the object structure expected when making a request to
+        create an Employee-Project relationship.
+      properties:
+        employeeId:
+          type: string
+          description:
+            The unique ID of the employee. Employee must be already existent in
+            the system.
+          required: true
+        projectId:
+          type: string
+          description:
+            The unique ID of the project. This must already exist in the system.
+          required: true
+    EmployeeProjectObject:
+      type: object
+      description: A representation of the EmployeeProject model.
+      properties:
+        _id:
+          type: string
+          description:
+            A unique ID generated to represent the employee-project
+            relationship.
+        employeeId:
+          type: string
+          description: The unique ID of the employee.
+          required: true
+        projectId:
+          type: object
+          description: The project and its details.
+          required: true
+        createdAt:
+          type: string
+          description:
+            The record of time at which the EmployeeProject relationship was
+            created.
+          required: false
+        updatedAt:
+          type: string
+          description:
+            The record of time at which the EmployeeProject relationship was
+            updated.
+          required: false

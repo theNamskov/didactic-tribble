@@ -1,0 +1,194 @@
+/api/v1/employees/auth/login:
+  post:
+    tags:
+      - Employee
+    description: Logs an employee in.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: The email of the employee used in creating account.
+                required: true
+                example: johndoe@test.com
+              password:
+                type: string
+                description:
+                  The password used by the employee in creating account.
+                required: true
+                example: password123
+    responses:
+      '200':
+        description: Employee successfully authenticated.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: string
+                  description:
+                    An Bearer authentication token to be passed in subsequent
+                    requests valid for a short amount of days.
+      '400':
+        description:
+          The email does not exist or credentials may be invalid. The
+          credentials should be double checked.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '404':
+        description: The email used was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+/api/v1/employees/:
+  post:
+    tags:
+      - Employee
+    description: Creates a new employee.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserCreateObject'
+    responses:
+      '200':
+        description: A new employee has been created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserObject'
+      '400':
+        description:
+          The email already exists or credentials may be invalid. A new email
+          should be chosen or the credentials should be double checked.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '404':
+        description: The email used was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  get:
+    tags:
+      - Employee
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee to get.
+    description: Fetches all active employees.
+    responses:
+      '200':
+        description: Successful fetch of all employees.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  patch:
+    tags:
+      - Employee
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee to update.
+    description: Updates the details of an employee.
+    requestBody:
+      required: true
+      content:
+        application/json:
+    responses:
+      '200':
+        description: Employee details successfully updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  delete:
+    tags:
+      - Employee
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee to get.
+    description: Deactivates an employee.
+    responses:
+      '200':
+        description: Successful deactivation of an employee.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example: Employee with ID 12033333 successfully deleted.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.

@@ -1,0 +1,44 @@
+components:
+  schemas:
+    ProjectCreateObject:
+      type: object
+      description:
+        This represents the object structure expected when making a request to
+        create a Project instance.
+      properties:
+        name:
+          type: string
+          description: The name of the project.
+          required: true
+          example: Ragnarok
+        description:
+          type: string
+          description: An elaborate description of the project.
+          example:
+            An intense teardown and buildup of the spirit of the developer aimed
+            at upgrading the current performance and skill. Go hard or go home.
+    ProjectObject:
+      type: object
+      description: A representation of the Role model.
+      properties:
+        _id:
+          type: string
+          description: A unique ID generated to represent the project.
+        name:
+          type: string
+          description: The name of the project.
+          example: Ragnarok
+        description:
+          type: string
+          description: An elaborate description of the project.
+          example:
+            An intense teardown and buildup of the spirit of the developer aimed
+            at upgrading the current performance and skill. Go hard or go home.
+        createdAt:
+          type: string
+          description: The record of time at which the Project was created.
+          required: false
+        updatedAt:
+          type: string
+          description: The record of time at which the Project was updated.
+          required: false

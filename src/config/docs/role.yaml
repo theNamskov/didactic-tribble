@@ -1,0 +1,125 @@
+/api/v1/roles/:
+  post:
+    tags:
+      - Role
+    description: Creates a new role.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleCreateObject'
+    responses:
+      '200':
+        description: A new role has been created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleObject'
+      '400':
+        description:
+          The role title already exists. A new role title should be chosen.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  get:
+    tags:
+      - Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific role to get.
+    description: Fetches all roles.
+    responses:
+      '200':
+        description: Successful fetch of all roles.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleObject'
+      '404':
+        description: The role ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  patch:
+    tags:
+      - Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific role to update.
+    description: Updates the details of a role.
+    requestBody:
+      required: true
+      content:
+        application/json:
+    responses:
+      '200':
+        description: Role details successfully updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  delete:
+    tags:
+      - Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific role to get.
+    description: Deletes a specified role.
+    responses:
+      '200':
+        description: Successful deletion of a role.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example: Role with ID 12033333 successfully deleted.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.

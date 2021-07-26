@@ -4,13 +4,13 @@ export const specOptions = {
   swaggerDefinition: {
     openapi: '3.0.2',
     info: {
-      title: 'dnar Assessment Fullstack API',
-      description: 'A dnar assessment test API',
+      title: 'Dnar Assessment Fullstack API',
+      description: 'A Dnar assessment test API',
       contact: {
-        name: 'dnar',
+        name: 'Dnar',
         url: 'https://dnar.io/',
       },
-      servers: [process.env.APP_BASE_URL, '<ANOTHER_SERVER_URL_HERE>'],
+      servers: [process.env.APP_BASE_URL],
       version: '1.0.0',
     },
   },

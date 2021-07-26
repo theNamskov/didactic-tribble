@@ -1,0 +1,40 @@
+components:
+  schemas:
+    RoleCreateObject:
+      type: object
+      description:
+        This represents the object structure expected when making a request to
+        create a Role instance.
+      properties:
+        title:
+          type: string
+          description: The role title.
+          required: true
+          example: Junior
+        description:
+          type: string
+          description: An elaborate description of the role.
+          example: An understudy on the team of developers.
+    RoleObject:
+      type: object
+      description: A representation of the Role model.
+      properties:
+        _id:
+          type: string
+          description: A unique ID generated to represent the role.
+        title:
+          type: string
+          description: The role title.
+          example: Junior
+        description:
+          type: string
+          description: An elaborate description of the role.
+          example: An understudy on the team of developers.
+        createdAt:
+          type: string
+          description: The record of time at which the Role was created.
+          required: false
+        updatedAt:
+          type: string
+          description: The record of time at which the Role was updated.
+          required: false

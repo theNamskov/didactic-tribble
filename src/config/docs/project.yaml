@@ -1,0 +1,125 @@
+/api/v1/projects/:
+  post:
+    tags:
+      - Project
+    description: Creates a new project.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectCreateObject'
+    responses:
+      '200':
+        description: A new project has been created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectObject'
+      '400':
+        description:
+          The project name already exists. A new project name should be chosen.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  get:
+    tags:
+      - Project
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific project to get.
+    description: Fetches all projects.
+    responses:
+      '200':
+        description: Successful fetch of all projects.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectObject'
+      '404':
+        description: The project ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  patch:
+    tags:
+      - Project
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific project to update.
+    description: Updates the details of a project.
+    requestBody:
+      required: true
+      content:
+        application/json:
+    responses:
+      '200':
+        description: Project details successfully updated.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
+  delete:
+    tags:
+      - Project
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific project to get.
+    description: Deletes a specified project.
+    responses:
+      '200':
+        description: Successful deletion of a project.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example: Project with ID 12033333 successfully deleted.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
