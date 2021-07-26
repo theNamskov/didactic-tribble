@@ -24,7 +24,7 @@ export const errorResponseWithData = (res, error) => {
 export const serverErrorResponseWithData = (
   res,
   error,
-  msg = 'Server error',
+  msg = 'An unexpected error occured',
 ) => {
   return res.status(500).json({status: -1, msg, error})
 }

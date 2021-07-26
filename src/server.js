@@ -18,6 +18,12 @@ import {specOptions, customOptions} from './config/docs/swagger-options'
 
 import {notFoundResponse} from './utils/responses'
 
+import employeesRouter from './routes/employee'
+import projectsRouter from './routes/project'
+import rolesRouter from './routes/role'
+import employeesAndProjectsRouter from './routes/employeeProject'
+import employeesAndRolesRouter from './routes/employeeRole'
+
 const app = express()
 
 app.use(express.urlencoded({extended: true}))
@@ -33,11 +39,14 @@ app.use(hpp()) //To prevent HTTP Parameter Pollution.
 app.use(express.static(path.join(__dirname, 'config/docs/assets')))
 
 const router = express.Router()
-app.use('/api/v1', router)
 
-/**
- * The Routes
- */
+router.use('/employees', employeesRouter)
+router.use('/projects', projectsRouter)
+router.use('/roles', rolesRouter)
+router.use('/employee-role', employeesAndRolesRouter)
+router.use('/employee-project', employeesAndProjectsRouter)
+
+app.use('/api/v1', router)
 
 // Default Route
 router.get('/', (req, res) => {
@@ -53,7 +62,7 @@ router.get('/', (req, res) => {
 const docs = swaggerJSDoc(specOptions)
 router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(docs, customOptions))
 
-router.use((req, res) => {
+app.use((req, res) => {
   return notFoundResponse(res, 'Requested resource not found.')
 })
 
