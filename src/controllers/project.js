@@ -6,8 +6,8 @@ export const create = async (req, res) => {
   try {
     // Keep a consistent form with project names being capitalised.
     const name =
-      req.body.name?.charAt(0).toUpperCase() +
-      req.body.name?.slice(1).toLowerCase()
+      req.body.name.charAt(0).toUpperCase() +
+      req.body.name.slice(1).toLowerCase()
     const nameExists = await Project.findOne({name})
     if (nameExists)
       return apiResponses.errorResponseWithMsg(
