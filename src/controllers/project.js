@@ -1,6 +1,7 @@
 import apiResponses from '../utils/responses'
 
 import Project from '../models/project'
+import EmployeeProject from '../models/employeeProject'
 
 export const create = async (req, res) => {
   try {
@@ -26,9 +27,15 @@ export const create = async (req, res) => {
 export const getOne = async (req, res) => {
   try {
     const id = req.params.id
-    const project = await Project.findById(id.toString())
+    let project = await Project.findById(id.toString())
     if (!project)
       return apiResponses.notFoundResponse(res, 'Requested project not found.')
+    project = project.toObject()
+    let projEmps = await EmployeeProject.find({
+      projectId: project._id,
+    }).populate('employeeId', {password: 0})
+    projEmps = projEmps.map(({employeeId: contrib}) => contrib)
+    project.contributors = projEmps
     return apiResponses.successResponseWithData(res, project)
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
@@ -37,7 +44,18 @@ export const getOne = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const projects = await Project.find({}).sort('--createdAt')
+    let projects = await Project.find({}).sort('--createdAt')
+    projects = projects.map(project => project.toObject())
+    // console.log(projects)
+    let projEmps = projects.map(project =>
+      EmployeeProject.find({projectId: project._id}).populate('employeeId', {
+        password: 0,
+      }),
+    )
+    const projEmployees = await Promise.all(projEmps)
+    projEmployees.forEach(
+      (contribs, i) => (projects[i].contributors = contribs),
+    )
     return apiResponses.successResponseWithData(res, projects)
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
