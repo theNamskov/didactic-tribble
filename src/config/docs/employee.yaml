@@ -66,7 +66,48 @@
         description:
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
+/api/v1/employees/{id}:
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee to get.
+    description: Fetches a specific employee.
+    responses:
+      '200':
+        description: Successful fetch of employee.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
 /api/v1/employees/:
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee
+    description: Fetches all active employees.
+    responses:
+      '200':
+        description: Successful fetch of all employees.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
   post:
     security:
       - bearerAuth: []
@@ -118,29 +159,6 @@
         description:
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
-  get:
-    security:
-      - bearerAuth: []
-    tags:
-      - Employee
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: An ID of the specific employee to get.
-    description: Fetches all active employees.
-    responses:
-      '200':
-        description: Successful fetch of all employees.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserObject'
-      '500':
-        description:
-          Unexpected error. Likelihood of a server error. Contact support
-          services for assistance.
   patch:
     security:
       - bearerAuth: []

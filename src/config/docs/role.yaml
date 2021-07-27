@@ -1,4 +1,71 @@
+/api/v1/roles/{id}:
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific role to get.
+    description: Fetches a specified role.
+    responses:
+      '200':
+        description: Successful fetch of a specific role.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleObject'
+      '404':
+        description: The role ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
 /api/v1/roles/:
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Role
+    description: Fetches all roles.
+    responses:
+      '200':
+        description: Successful fetch of all roles.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleObject'
+      '404':
+        description: The role ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
   post:
     security:
       - bearerAuth: []
@@ -36,42 +103,6 @@
         description:
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
-  get:
-    security:
-      - bearerAuth: []
-    tags:
-      - Role
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: An ID of the specific role to get.
-    description: Fetches all roles.
-    responses:
-      '200':
-        description: Successful fetch of all roles.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RoleObject'
-      '404':
-        description: The role ID provided was not found in the system.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: number
-                  description: Represents the status of the operation.
-                msg:
-                  type: string
-                  description: Gives a summary of the error.
-      '500':
-        description:
-          Unexpected error. Likelihood of a server error. Contact support
-          services for assistance.
   patch:
     security:
       - bearerAuth: []
