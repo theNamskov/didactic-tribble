@@ -10,6 +10,7 @@
         schema:
           type: string
         description: An ID of the specific role to get.
+        required: true
     description: Fetches a specified role.
     responses:
       '200':
@@ -31,6 +32,39 @@
                 msg:
                   type: string
                   description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  delete:
+    security:
+      - bearerAuth: []
+    tags:
+      - Role
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific role to get.
+        required: true
+    description: Deletes a specified role.
+    responses:
+      '200':
+        description: Successful deletion of a role.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example: Role with ID 12033333 successfully deleted.
       '500':
         description:
           Unexpected error. Likelihood of a server error. Contact support
@@ -130,35 +164,3 @@
         description:
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
-  delete:
-    security:
-      - bearerAuth: []
-    tags:
-      - Role
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: An ID of the specific role to get.
-    description: Deletes a specified role.
-    responses:
-      '200':
-        description: Successful deletion of a role.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: number
-                  description: Represents the status of the operation.
-                  example: 1
-                msg:
-                  type: string
-                  description: Gives a summary of the error.
-                  example: Role with ID 12033333 successfully deleted.
-      '500':
-        description:
-          Unexpected error. Likelihood of a server error. Contact support
-          services for assistance.

@@ -37,6 +37,41 @@
         description:
           Unexpected error. Likelihood of a server error. Contact support
           services for assistance.
+  delete:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Project
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee-project relationship.
+        required: true
+    description: Deletes a specified employee-project relationship.
+    responses:
+      '200':
+        description: Successful deletion of an employee-project relationship.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example:
+                    Employee-Project relationship with ID 12033333 successfully
+                    deleted.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
 /api/v1/employee-project/:
   post:
     security:
@@ -61,37 +96,3 @@
         description:
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
-  delete:
-    security:
-      - bearerAuth: []
-    tags:
-      - Employee And Project
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: An ID of the specific employee-project relationship.
-    description: Deletes a specified employee-project relationship.
-    responses:
-      '200':
-        description: Successful deletion of an employee-project relationship.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: number
-                  description: Represents the status of the operation.
-                  example: 1
-                msg:
-                  type: string
-                  description: Gives a summary of the error.
-                  example:
-                    Employee-Project relationship with ID 12033333 successfully
-                    deleted.
-      '500':
-        description:
-          Unexpected error. Likelihood of a server error. Contact support
-          services for assistance.
