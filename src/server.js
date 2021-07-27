@@ -28,12 +28,18 @@ import passport from './config/auth'
 
 const app = express()
 
+const corsOptions = {
+  origin: (origin, callback) => callback(null, true),
+  credentials: true,
+  exposedHeaders: ['set-cookie', 'eTag', 'date'],
+}
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.raw())
 app.use(express.text())
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(mongoSanitize()) //Use for security to prevent NoSql injections
 app.use(helmet()) //Adds extra headers to protect the routes
 app.use(xss()) //To prevent a harmful script being sent with the POST request
