@@ -1,4 +1,4 @@
-/api/v1/employee-role/:
+/api/v1/employee-role/{id}:
   get:
     security:
       - bearerAuth: []
@@ -12,6 +12,37 @@
         description:
           An ID of the specific employee to get role assigned. This is used to
           retrieve data for a specific employee.
+    description: Fetches all employees and their roles.
+    responses:
+      '200':
+        description: Successful fetch of an employee and their role.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRoleObject'
+      '404':
+        description: The employee ID provided was not found in the system.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+/api/v1/employee-role/:
+  get:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Role
     description: Fetches all employees and their roles.
     responses:
       '200':

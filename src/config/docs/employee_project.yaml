@@ -1,27 +1,4 @@
-/api/v1/employee-project/:
-  post:
-    security:
-      - bearerAuth: []
-    tags:
-      - Employee And Project
-    description: Creates a new employee-project relationship.
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EmployeeProjectCreateObject'
-    responses:
-      '200':
-        description: A new employee-project relationship has been created.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmployeeProjectObject'
-      '500':
-        description:
-          Unexpected error. Likelihood of a server error or invalidity of passed
-          parameters.
+/api/v1/employee-project/{id}:
   get:
     security:
       - bearerAuth: []
@@ -60,6 +37,30 @@
         description:
           Unexpected error. Likelihood of a server error. Contact support
           services for assistance.
+/api/v1/employee-project/:
+  post:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee And Project
+    description: Creates a new employee-project relationship.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmployeeProjectCreateObject'
+    responses:
+      '200':
+        description: A new employee-project relationship has been created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeProjectObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error or invalidity of passed
+          parameters.
   delete:
     security:
       - bearerAuth: []
