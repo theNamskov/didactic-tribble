@@ -39,7 +39,7 @@ export const getOne = async (req, res) => {
 
 export const deleteOne = async (req, res) => {
   try {
-    await EmployeeProject.findByIdAndRemove(req.params.id)
+    await EmployeeProject.findByIdAndRemove(req.params.id.toString())
     return apiResponses.successResponseWithMsg(
       res,
       `Employee Project relationship ${req.params.id} deleted.`,

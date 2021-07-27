@@ -80,8 +80,10 @@ export const updateOne = async (req, res) => {
 
 export const deleteOne = async (req, res) => {
   try {
-    const project = await Project.delete({_id: req.params.id})
+    const project = await Project.deleteOne({_id: req.params.id})
     if (!project) return apiResponses.notFoundResponse(res)
+
+    await EmployeeProject.deleteMany({projectId: req.params.id})
     return apiResponses.successResponseWithMsg(
       res,
       `Project with ID ${req.params.id} deleted`,
