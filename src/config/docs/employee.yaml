@@ -78,6 +78,7 @@
         schema:
           type: string
         description: An ID of the specific employee to get.
+        required: true
     description: Fetches a specific employee.
     responses:
       '200':
@@ -86,6 +87,39 @@
           application/json:
             schema:
               $ref: '#/components/schemas/UserObject'
+      '500':
+        description:
+          Unexpected error. Likelihood of a server error. Contact support
+          services for assistance.
+  delete:
+    security:
+      - bearerAuth: []
+    tags:
+      - Employee
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: An ID of the specific employee to get.
+        required: true
+    description: Deactivates an employee.
+    responses:
+      '200':
+        description: Successful deactivation of an employee.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  description: Represents the status of the operation.
+                  example: 1
+                msg:
+                  type: string
+                  description: Gives a summary of the error.
+                  example: Employee with ID 12033333 successfully deleted.
       '500':
         description:
           Unexpected error. Likelihood of a server error. Contact support
@@ -186,35 +220,3 @@
         description:
           Unexpected error. Likelihood of a server error or invalidity of passed
           parameters.
-  delete:
-    security:
-      - bearerAuth: []
-    tags:
-      - Employee
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        description: An ID of the specific employee to get.
-    description: Deactivates an employee.
-    responses:
-      '200':
-        description: Successful deactivation of an employee.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: number
-                  description: Represents the status of the operation.
-                  example: 1
-                msg:
-                  type: string
-                  description: Gives a summary of the error.
-                  example: Employee with ID 12033333 successfully deleted.
-      '500':
-        description:
-          Unexpected error. Likelihood of a server error. Contact support
-          services for assistance.

@@ -1,6 +1,7 @@
 import apiResponses from '../utils/responses'
 
 import Role from '../models/role'
+import EmployeeRole from '../models/employeeRole'
 
 export const create = async (req, res) => {
   try {
@@ -58,6 +59,7 @@ export const deleteOne = async (req, res) => {
   try {
     const role = await Role.deleteOne({_id: req.params.id})
     if (!role) return apiResponses.notFoundResponse(res)
+    await EmployeeRole.deleteMany({roleId: req.params.id})
     return apiResponses.successResponseWithMsg(
       res,
       `Role with ID ${req.params.id} deleted`,

@@ -15,9 +15,21 @@ export const create = async (req, res) => {
 
 export const getOne = async (req, res) => {
   try {
-    const employeeProjects = await EmployeeProject.find({
+    let employeeProjects = await EmployeeProject.find({
       employeeId: req.params.id,
     }).populate('projectId')
+
+    employeeProjects = employeeProjects.map(data => data.toObject())
+    const projectsRef = employeeProjects.map(({projectId: project}) => {
+      return EmployeeProject.find({projectId: project._id})
+        .select('employeeId')
+        .populate('employeeId', {password: 0})
+    })
+
+    let contribs = await Promise.all(projectsRef)
+    contribs.forEach((arr, i) => {
+      employeeProjects[i].contributors = arr
+    })
 
     return apiResponses.successResponseWithData(res, employeeProjects)
   } catch (e) {
@@ -27,7 +39,7 @@ export const getOne = async (req, res) => {
 
 export const deleteOne = async (req, res) => {
   try {
-    await EmployeeProject.findByIdAndRemove(req.params.id)
+    await EmployeeProject.findByIdAndRemove(req.params.id.toString())
     return apiResponses.successResponseWithMsg(
       res,
       `Employee Project relationship ${req.params.id} deleted.`,

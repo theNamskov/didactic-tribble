@@ -64,11 +64,20 @@ export const login = async (req, res) => {
         res,
         'Invalid user credentials. Check email or password.',
       )
+    let role = await EmployeeRole.findOne({employeeId: user._id}).populate(
+      'roleId',
+    )
+    if (role) {
+      role = role.roleId
+    } else {
+      role = {}
+    }
     return apiResponses.successResponseWithData(res, {
       token: signToken({id: user.id}, process.env.AUTH_SECRET_DEF, {
         expiresIn: '5d',
       }),
       employee: user,
+      role,
     })
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
@@ -78,10 +87,19 @@ export const login = async (req, res) => {
 export const getOne = async (req, res) => {
   try {
     const id = req.params.id
-    const employee = await Employee.findById(id.toString()).select('-password')
+    let employee = await Employee.findById(id.toString()).select('-password')
     if (!employee || !employee.isActive)
       return apiResponses.notFoundResponse(res, 'Requested employee not found.')
-    return apiResponses.successResponseWithData(res, employee)
+    employee = employee.toObject()
+    let role = await EmployeeRole.findOne({employeeId: employee._id}).populate(
+      'roleId',
+    )
+    if (role) {
+      role = role.roleId
+    } else {
+      role = {}
+    }
+    return apiResponses.successResponseWithData(res, {employee, role})
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
   }
@@ -89,9 +107,16 @@ export const getOne = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const employees = await Employee.find({isActive: true})
+    let employees = await Employee.find({isActive: true})
       .sort('--createdAt')
       .select('-password')
+    employees = employees.map(e => e.toObject())
+    let eRoles = employees.map(e =>
+      EmployeeRole.findOne({employeeId: e._id}).populate('roleId'),
+    )
+
+    eRoles = await Promise.all(eRoles)
+    eRoles.forEach(({roleId: role}, i) => (employees[i].role = role))
     return apiResponses.successResponseWithData(res, employees)
   } catch (e) {
     return apiResponses.serverErrorResponseWithData(res, e)
